@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yogurt Production Batching System</title>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <div id="page-loading" class="loading-overlay">
+        <div class="spinner"></div>
+        <div id="loading-msg" class="loading-text">Loading...</div>
+    </div>
+
+    <div class="production-container">
+        <header class="floor-header">
+    <div class="logo-area">
+        <h1>Yogurt Production Floor</h1>
+        <span class="station-tag">Batching Station Terminal</span>
+    </div>
+    
+    <div class="user-profile-zone">
+        <div class="user-badge">
+            <span class="label">Operator ID:</span>
+            <span class="val">ID-0001</span>
+        </div>
+        
+        <button type="button" id="btn-logout" class="btn-logout" title="Sign out of terminal">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="logout-icon">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+            </svg>
+            Sign Out
+        </button>
+    </div>
+</header>
+
+        
+
+        <main class="floor-main">
+            <section class="card task-selection-card">
+                <h2>Select Current Task</h2>
+                <div class="button-group">
+                    <button class="btn btn-task active" data-task="RY">
+                        <span class="task-code">Raw Yogurt (RY)</span>
+                        <span class="task-desc">No requirements</span>
+                    </button>
+                    <button class="btn btn-task" data-task="YB">
+                        <span class="task-code">Yogurt Base (YB)</span>
+                        <span class="task-desc">Requires RY</span>
+                    </button>
+                    <button class="btn btn-task" data-task="FY">
+                        <span class="task-code">Finished Yogurt (FY)</span>
+                        <span class="task-desc">Requires YB</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="card validation-card" id="ingredient-validation-section">
+                <h2>Ingredient Verification</h2>
+                <div class="form-group">
+                    <label id="ingredient-label" for="prereq-id">Enter Prerequisite Batch ID</label>
+                    <div class="input-action-group">
+                        
+                        <div class="custom-select-wrapper">
+                            <input 
+                                type="text" 
+                                id="prereq-id" 
+                                class="form-control" 
+                                placeholder="Type or click arrow to select..." 
+                                autocomplete="off"
+                            >
+                            <span class="dropdown-arrow">&#9662;</span>
+                            
+                            <div id="custom-dropdown-panel" class="custom-dropdown-panel">
+                                </div>
+                        </div>
+                        
+                        <button class="btn btn-secondary" id="btn-verify">Verify Batch</button>
+                        
+                    </div>
+                    <div id="validation-status" class="status-msg"></div>
+                </div>
+            </section>
+
+            <section class="card action-card">
+                <h2>Process & Log Batch</h2>
+                
+                <div class="batch-preview-box">
+                    <span class="preview-title">Generated Batch ID Preview</span>
+                    <div class="batch-id-display" id="generated-id-display">RY202605290001</div>
+                </div>
+
+                <div class="crosscheck-panel">
+                    <h3>Data Crosscheck Summary</h3>
+                    <table class="summary-table">
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>Batch Type</td>
+                            <td id="summary-type">Raw Yogurt (RY)</td>
+                        </tr>
+                        <tr>
+                            <td>Timestamp</td>
+                            <td id="summary-time">2026-05-29 10:50 AM</td>
+                        </tr>
+                        <tr>
+                            <td>Consumed Ingredient</td>
+                            <td id="summary-consumed" class="text-muted">None (Primary Step)</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="submit-row">
+                    <button class="btn btn-primary btn-block" id="btn-submit">Log Data to Google Sheets</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div id="custom-confirm-modal" class="confirm-modal-overlay">
+        <div class="confirm-modal-card">
+            <div class="confirm-modal-header">
+                <h3>Confirm Production Log</h3>
+            </div>
+            <div class="confirm-modal-body">
+                <p>Are you sure you want to submit this batch step to the permanent registry?</p>
+                <div class="confirm-summary-box">
+                    <div class="summary-row"><strong>Task Type:</strong> <span id="modal-summary-type">-</span></div>
+                    <div class="summary-row"><strong>Batch ID:</strong> <span id="modal-summary-id">-</span></div>
+                    <div class="summary-row"><strong>Consuming Input:</strong> <span id="modal-summary-consumed">-</span></div>
+                </div>
+            </div>
+            <div class="confirm-modal-footer">
+                <button id="btn-modal-cancel" class="btn-modal btn-modal-secondary">Cancel</button>
+                <button id="btn-modal-confirm" class="btn-modal btn-modal-primary">Yes, Submit Entry</button>
+            </div>
+        </div>
+    </div>
+    <div id="custom-alert-modal" class="confirm-modal-overlay">
+        <div class="confirm-modal-card alert-modal-card">
+            <div class="confirm-modal-header">
+                <h3 id="alert-modal-title">Notification</h3>
+            </div>
+            <div class="confirm-modal-body">
+                <p id="alert-modal-message">Message text goes here.</p>
+            </div>
+            <div class="confirm-modal-footer">
+                <button id="btn-alert-close" class="btn-modal btn-modal-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

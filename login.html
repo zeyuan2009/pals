@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Registry - Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-header">
+            <div class="brand-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            </div>
+            <h1>Production Registry</h1>
+            <p>Sign in to log and verify batches</p>
+        </div>
+
+        <div id="auth-alert" class="alert-box" style="display: none;"></div>
+
+        <form id="login-form" autocomplete="off">
+            <div class="input-group">
+                <label for="operator-id">Operator/Staff ID</label>
+                <input 
+                    type="text" 
+                    id="operator-id" 
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="secret-pin">Password</label>
+                <input 
+                    type="password" 
+                    id="secret-pin" 
+                    required
+                >
+            </div>
+
+            <button type="submit" id="btn-login" class="btn-primary">
+                Verify Identity
+            </button>
+        </form>
+    </div>
+
+    <div id="page-loading" class="loading-overlay">
+        <div class="spinner"></div>
+        <div id="loading-msg" class="loading-text">Authenticating credentials...</div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

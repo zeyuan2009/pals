@@ -1,0 +1,670 @@
+/*
+
+########  ########   #######  ########  ##     ##  ######  ######## ####  #######  ##    ## 
+##     ## ##     ## ##     ## ##     ## ##     ## ##    ##    ##     ##  ##     ## ###   ## 
+##     ## ##     ## ##     ## ##     ## ##     ## ##          ##     ##  ##     ## ####  ## 
+########  ########  ##     ## ##     ## ##     ## ##          ##     ##  ##     ## ## ## ## 
+##        ##   ##   ##     ## ##     ## ##     ## ##          ##     ##  ##     ## ##  #### 
+##        ##    ##  ##     ## ##     ## ##     ## ##    ##    ##     ##  ##     ## ##   ### 
+##        ##     ##  #######  ########   #######   ######     ##    ####  #######  ##    ## 
+
+   ###    ##     ## ########  #######  ##     ##    ###    ######## ####  ######            
+  ## ##   ##     ##    ##    ##     ## ###   ###   ## ##      ##     ##  ##    ##           
+ ##   ##  ##     ##    ##    ##     ## #### ####  ##   ##     ##     ##  ##                 
+##     ## ##     ##    ##    ##     ## ## ### ## ##     ##    ##     ##  ##                 
+######### ##     ##    ##    ##     ## ##     ## #########    ##     ##  ##                 
+##     ## ##     ##    ##    ##     ## ##     ## ##     ##    ##     ##  ##    ##           
+##     ##  #######     ##     #######  ##     ## ##     ##    ##    ####  ######  
+
+##        #######   ######    ######   #### ##    ##  ######                                
+##       ##     ## ##    ##  ##    ##   ##  ###   ## ##    ##                               
+##       ##     ## ##        ##         ##  ####  ## ##                                     
+##       ##     ## ##   #### ##   ####  ##  ## ## ## ##   ####                              
+##       ##     ## ##    ##  ##    ##   ##  ##  #### ##    ##                               
+##       ##     ## ##    ##  ##    ##   ##  ##   ### ##    ##                               
+########  #######   ######    ######   #### ##    ##  ######                                
+
+ ######  ##    ##  ######  ######## ######## ##     ##                                      
+##    ##  ##  ##  ##    ##    ##    ##       ###   ###                                      
+##         ####   ##          ##    ##       #### ####                                      
+ ######     ##     ######     ##    ######   ## ### ##                                      
+      ##    ##          ##    ##    ##       ##     ##                                      
+##    ##    ##    ##    ##    ##    ##       ##     ##                                      
+ ######     ##     ######     ##    ######## ##     ##                                      
+
+
+        (C) ALL RIGHTS RESERVED 2026
+        Developer   : Ze Yuan
+        Version     : V2.1 Operational Hardened
+
+
+*/
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f6f9;
+    color: #333333;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.production-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* --- Header Styling --- */
+.floor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 20px 24px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.floor-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.station-tag {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    display: block;
+    margin-top: 2px;
+}
+
+.user-badge {
+    background-color: #334155;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.user-badge .label {
+    color: #94a3b8;
+    margin-right: 5px;
+}
+
+.user-badge .val {
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+/* --- Layout Cards --- */
+.floor-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.card h2 {
+    font-size: 1.2rem;
+    color: #0f172a;
+    margin-bottom: 16px;
+    font-weight: 600;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 8px;
+}
+
+/* --- Custom Button Groups --- */
+.button-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.btn {
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid #e2e8f0;
+    background-color: #ffffff;
+    color: #475569;
+    text-align: left;
+}
+
+.btn-task {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.btn-task .task-code {
+    font-size: 1.25rem;
+    color: #0f172a;
+}
+
+.btn-task .task-desc {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #64748b;
+}
+
+/* Button Active States */
+.btn-task.active {
+    border-color: #2563eb;
+    background-color: #eff6ff;
+}
+
+.btn-task.active .task-code {
+    color: #1e40af;
+}
+
+.btn-task:hover:not(.active) {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+/* --- Forms & Validation Elements --- */
+.input-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-block label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #334155;
+}
+
+.input-row {
+    display: flex;
+    gap: 12px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 14px;
+    border-radius: 8px;
+    border: 2px solid #cbd5e1;
+    font-size: 1.1rem;
+    font-family: monospace;
+    color: #0f172a;
+    background-color: #f8fafc;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #2563eb;
+    background-color: #ffffff;
+}
+
+.btn-action {
+    background-color: #475569;
+    color: white;
+    border: none;
+    padding: 0 24px;
+}
+
+.btn-action:hover {
+    background-color: #334155;
+}
+
+/* Status Notifications */
+.status-msg {
+    margin-top: 12px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    display: none; /* Controlled via JS logic or toggle classes */
+}
+
+.status-error {
+    display: block; /* Shown for demonstration */
+    background-color: #fef2f2;
+    border-left: 4px solid #ef4444;
+    color: #991b1b;
+}
+
+/* --- Process & Preview UI Panel --- */
+.batch-preview-box {
+    background-color: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.preview-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.batch-id-display {
+    font-size: 1.75rem;
+    font-weight: 700;
+    font-family: monospace;
+    color: #0f172a;
+    letter-spacing: 1px;
+}
+
+/* Summary Crosscheck Data Table */
+.crosscheck-panel h3 {
+    font-size: 1rem;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+.summary-table th, .summary-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.95rem;
+}
+
+.summary-table th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: #64748b;
+    width: 35%;
+}
+
+.text-muted {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+/* Primary Execution Control Button */
+.btn-primary {
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 16px;
+    width: 100%;
+    box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #15803d;
+    box-shadow: 0 4px 12px -1px rgba(22, 163, 74, 0.3);
+}
+
+/* Full-screen loading overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Show state triggered by JavaScript */
+.loading-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Spinner animation */
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #e2e8f0;
+    border-top: 5px solid #165fa3; /* Matches your success green */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    margin-top: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Container to keep elements aligned to the right side of the header */
+.user-profile-zone {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Space between operator badge and logout button */
+}
+
+/* Inherits your clean header elements with custom action styling */
+.btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ffffff;
+    color: #64748b; /* Neutral slate text */
+    border: 1px solid #e2e8f0;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+/* Interactive Feedback State */
+.btn-logout:hover {
+    background-color: #fef2f2; /* Light red tint warning */
+    border-color: #fca5a5;
+    color: #b91c1c; /* Crimson text accent */
+}
+
+/* Standardized Icon Dimensions */
+.logout-icon {
+    width: 15px;
+    height: 15px;
+}
+
+/* Add these styling declarations directly into your index.css file to align layout cards */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #334155;
+}
+
+.input-action-group {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.form-control {
+    flex: 1;
+    padding: 14px;
+    border-radius: 8px;
+    border: 2px solid #cbd5e1;
+    font-size: 1.1rem;
+    font-family: monospace;
+    color: #0f172a;
+    background-color: #f8fafc;
+    transition: all 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #2563eb;
+    background-color: #ffffff;
+}
+
+.btn-secondary {
+    background-color: #475569;
+    color: #ffffff;
+    border: none;
+    padding: 0 24px;
+    border-radius: 8px;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: #334155;
+}
+
+/* Button Disabled Staging State Control */
+.btn:disabled {
+    background-color: #cbd5e1 !important;
+    border-color: #cbd5e1 !important;
+    color: #94a3b8 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+}
+
+/* ====================================================
+   PALS PRODUCTION TERMINAL CUSTOM SELECT UI COMPONENT
+   ==================================================== */
+
+/* 1. Ensure the container takes up all available space in the action row */
+.input-action-group {
+    display: flex;
+    align-items: stretch; /* Forces input and button heights to match perfectly */
+    gap: 12px;
+    width: 100%;
+}
+
+/* 2. Make the wrapper expand to fill the left side of the row */
+.custom-select-wrapper {
+    position: relative;
+    flex: 1; /* Replaces the missing text-input stretch mechanics */
+    display: flex;
+    align-items: center;
+}
+
+/* 3. Make sure the input stretches completely across its wrapper container */
+.custom-select-wrapper .form-control {
+    width: 100%;
+    flex: 1;
+    margin: 0;
+    padding: 14px 40px 14px 14px; /* Added right padding so text never overlaps the arrow */
+}
+
+/* 4. Sleek, absolute-positioned dropdown arrow indicator */
+.dropdown-arrow {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b; /* Slate-500 tint to match theme aesthetics */
+    font-size: 0.85rem;
+    pointer-events: none; /* Allows clicks to pass through straight to the input box */
+    transition: transform 0.2s ease-in-out;
+    user-select: none;
+}
+
+/* Rotate indicator arrow when menu opens */
+.custom-select-wrapper.open .dropdown-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* 5. Floating Custom Dropdown Option Panel */
+.custom-dropdown-panel {
+    display: none; /* Controlled dynamically by JavaScript */
+    position: absolute;
+    top: calc(100% + 6px); /* Floating 6px directly below the field */
+    left: 0;
+    width: 100%;
+    max-height: 220px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border: 2px solid #cbd5e1; /* Matches your text control border exactly */
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+}
+
+/* 6. Option Selection Rows */
+.custom-dropdown-item {
+    padding: 12px 14px;
+    font-size: 1.05rem;
+    font-family: monospace; /* Preserves your structural serial key spacing */
+    color: #0f172a;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.custom-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+/* Interactive Highlight states */
+.custom-dropdown-item:hover {
+    background-color: #eff6ff; /* Matches active task tile accent */
+    color: #1e40af;
+}
+
+/* Status Notifications within drop panel matrix */
+.dropdown-status-msg {
+    padding: 14px;
+    text-align: center;
+    color: #64748b;
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+/* Custom Confirmation Modal Layout styling */
+.confirm-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.6); /* Slate backdrop */
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.confirm-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.confirm-modal-card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 440px;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+    padding: 24px;
+}
+
+.confirm-modal-overlay.active .confirm-modal-card {
+    transform: scale(1);
+}
+
+.confirm-modal-header h3 {
+    margin: 0 0 12px 0;
+    font-size: 1.25rem;
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.confirm-modal-body p {
+    margin: 0 0 16px 0;
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.confirm-summary-box {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    padding: 4px 0;
+    color: #334155;
+}
+
+.confirm-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-modal {
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 0.925rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.15s ease;
+}
+
+.btn-modal-secondary {
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+.btn-modal-secondary:hover {
+    background-color: #e2e8f0;
+}
+
+.btn-modal-primary {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+.btn-modal-primary:hover {
+    background-color: #1d4ed8;
+}
+
+/* Custom Alert Specific Customizations */
+.alert-modal-card {
+    max-width: 380px; /* Slightly more compact for quick alerts */
+    border-top: 4px solid #2563eb; /* Default brand blue accent line */
+}
+
+.alert-modal-card.alert-success {
+    border-top-color: #16a34a; /* Green header line for success states */
+}
+
+.alert-modal-card.alert-error {
+    border-top-color: #ef4444; /* Red header line for blockades/errors */
+}
