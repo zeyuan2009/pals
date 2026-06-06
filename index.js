@@ -35,42 +35,52 @@
 
         (C) ALL RIGHTS RESERVED 2026
         Developer   : Ze Yuan
-        Version     : V2.1 Operational Hardened
+        Version     : V1.0 (Operational)
 
 
 */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Version      : 2.8 Complete Custom UI Framework Build
-    // Developer    : Ze Yuan
-    // (C) All Rights Reserved 2026
+    // ================================
+    // | CORE VARIABLES AND CONSTANTS |
+    // ================================
 
-    const taskButtons = document.querySelectorAll('.btn-task');
-    const ingredientLabel = document.getElementById('ingredient-label');
-    const prereqInput = document.getElementById('prereq-id');
-    const verifyButton = document.getElementById('btn-verify');
-    const statusMessage = document.getElementById('validation-status');
-    const submitButton = document.getElementById('btn-submit');
-    const loadingOverlay = document.getElementById('page-loading');
-    const loadingMsg = document.getElementById('loading-msg');
+    // Core Elements
+    const taskButtons       = document.querySelectorAll('.btn-task');
+    const ingredientLabel   = document.getElementById('ingredient-label');
+    const prereqInput       = document.getElementById('prereq-id');
+    const verifyButton      = document.getElementById('btn-verify');
+    const statusMessage     = document.getElementById('validation-status');
+    const submitButton      = document.getElementById('btn-submit');
+    const loadingOverlay    = document.getElementById('page-loading');
+    const loadingMsg        = document.getElementById('loading-msg');
     
-    // Confirmation UI Modal Hooks
-    const confirmModal = document.getElementById('custom-confirm-modal');
-    const modalCancelBtn = document.getElementById('btn-modal-cancel');
-    const modalConfirmBtn = document.getElementById('btn-modal-confirm');
-    const modalSummaryType = document.getElementById('modal-summary-type');
-    const modalSummaryId = document.getElementById('modal-summary-id');
-    const modalSummaryConsumed = document.getElementById('modal-summary-consumed');
+    // Submit Confirmation Elements
+    const confirmModal          = document.getElementById('custom-confirm-modal');
+    const modalCancelBtn        = document.getElementById('btn-modal-cancel');
+    const modalConfirmBtn       = document.getElementById('btn-modal-confirm');
+    const modalSummaryType      = document.getElementById('modal-summary-type');
+    const modalSummaryId        = document.getElementById('modal-summary-id');
+    const modalSummaryConsumed  = document.getElementById('modal-summary-consumed');
 
-    // Alert UI Modal Hooks
-    const alertModal = document.getElementById('custom-alert-modal');
-    const alertCard = alertModal.querySelector('.alert-modal-card');
-    const alertTitle = document.getElementById('alert-modal-title');
-    const alertMessage = document.getElementById('alert-modal-message');
+    // Alert Panel Elements
+    const alertModal    = document.getElementById('custom-alert-modal');
+    const alertCard     = alertModal.querySelector('.alert-modal-card');
+    const alertTitle    = document.getElementById('alert-modal-title');
+    const alertMessage  = document.getElementById('alert-modal-message');
     const alertCloseBtn = document.getElementById('btn-alert-close');
 
+    // Miscellaneous Constants
     const webAppUrl = "https://script.google.com/macros/s/AKfycbzQHcl3RHOXFLHPvco_CoN28quRFDxzK_LvxTjhbHq4szfdD50sg-ukODvANkIKIBzs/exec";
+
+
+
+    // ============================
+    // | MAIN LOGIC AND FUNCTIONS |
+    // ============================
+
+    // ===== Credentials Verification Module ===== //
 
     let currentTask = 'RY';
     let securelyGeneratedId = '';
@@ -87,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutButton = document.getElementById('btn-logout');
     if (logoutButton) {
         logoutButton.addEventListener('click', () => {
-            // Optional: You could upgrade this to a custom modal too if required later!
             if (confirm("Are you sure you want to log out of this production terminal session?")) {
                 localStorage.removeItem('session_staff_id');
                 localStorage.removeItem('session_staff_name');
@@ -104,14 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
     statusMessage.style.display = 'none';
     updateUiForTask('RY');
 
-    // ========================================
-    // | CUSTOM ALERT INTERFACES ROUTING CORE |
-    // ========================================
+    // ===== Alert Panel Handler Module ===== //
+
     function showAlertUI(title, message, visualType = 'info') {
         alertTitle.textContent = title;
         alertMessage.textContent = message;
-        
-        // Reset classes
         alertCard.classList.remove('alert-success', 'alert-error');
         
         if (visualType === 'success') {
@@ -147,6 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
             updateUiForTask(currentTask);
         });
     });
+
+    // ===== Task Selection Handler Module ===== //
 
     function updateUiForTask(task) {
         prereqInput.value = '';
@@ -329,6 +337,8 @@ document.addEventListener('DOMContentLoaded', () => {
         summaryType.textContent = targetFullTitle;
     }
 
+    // ===== Prerequisite Verification Module ===== //
+
     function checkPrerequisiteId() {
         const idValue = prereqInput.value.trim();
         if (!idValue) {
@@ -391,6 +401,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ===== Data Handling Module ===== //
+
     function logBatchToGoogleSheets() {
         const validatedId = prereqInput.getAttribute('data-validated-id');
 
@@ -443,7 +455,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // MODAL WINDOW INTERACTION TRIGGERS
+    // ===== Module Activation ===== //
+
     submitButton.addEventListener('click', () => {
         const validatedId = prereqInput.getAttribute('data-validated-id');
         
